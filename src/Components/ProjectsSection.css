@@ -1,0 +1,133 @@
+.projects-scroll-section {
+    width: 100vw;
+    height: 100vh;
+    padding: 0 40px; /* Removed top padding to allow cards to sit lower */
+    display: flex;
+    flex-direction: column;
+    /* This pushes the slider (cards) to the absolute bottom of the section */
+    justify-content: flex-end;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+}
+
+.projects-slider {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch; /* smooth momentum on iOS */
+    scroll-snap-type: x proximity; /* gentle horizontal snap between cards */
+    scroll-padding-left: 40px;
+    padding: 0 0 60px 0; /* bottom space; left padding via scroll-padding */
+}
+
+.projects-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.project-card {
+    min-width: 420px;
+    /* Height remains 600px, but it's now anchored to the bottom */
+    height: 600px;
+    background: #111;
+    border-radius: 50px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    scroll-snap-align: start;
+    transition: transform 500ms var(--ease-smooth), box-shadow 400ms var(--ease-smooth);
+    will-change: transform;
+}
+
+/* ... keep the rest of your CSS (image-container, pill, status colors) exactly as they were ... */
+.project-image-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.project-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* The White Pill Layout */
+.project-overlay-pill {
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+    right: 20px;
+    background: #fff;
+    border-radius: 35px;
+    padding: 25px 30px;
+    z-index: 2;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 400ms var(--ease-smooth), box-shadow 400ms var(--ease-smooth);
+}
+
+.pill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pill-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.pill-status {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.pill-status.upcoming { background: #E8E9FF; color: #7B72FF; }
+.pill-status.active { background: #E2FFE9; color: #26D367; }
+.pill-status.finished { background: #FFEDED; color: #FF5C5C; }
+
+.pill-details {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.pill-details p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #444;
+}
+
+/* Hover/touch micro-interactions */
+.project-card:hover .project-overlay-pill {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.18);
+}
+
+/* Responsive sizing for cards */
+@media (max-width: 1200px) {
+    .project-card { min-width: 380px; height: 560px; border-radius: 40px; }
+}
+@media (max-width: 900px) {
+    .projects-scroll-section { padding: 0 20px; }
+    .projects-slider { gap: 20px; scroll-padding-left: 20px; }
+    .project-card { min-width: 78vw; height: 58vh; border-radius: 36px; }
+    .project-overlay-pill { left: 16px; right: 16px; padding: 20px 22px; border-radius: 28px; }
+    .pill-title { font-size: 1.3rem; }
+}
+@media (max-width: 600px) {
+    .project-card { min-width: 86vw; height: 56vh; border-radius: 30px; }
+    .pill-title { font-size: 1.15rem; }
+    .pill-status { padding: 6px 14px; font-size: 0.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card, .project-overlay-pill { transition: none; }
+}

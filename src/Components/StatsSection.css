@@ -1,0 +1,78 @@
+.stats-section {
+    width: 100%; /* Changed from 100vw to allow for natural scroll */
+    min-height: 80vh; /* Reduced height so it doesn't swallow the whole screen */
+    background-color: #F2F3F4;
+    display: flex;
+    justify-content: center; /* Centers the container */
+    align-items: center;
+    padding: 60px 40px; /* Increased vertical and horizontal padding */
+    box-sizing: border-box;
+}
+
+.stats-container {
+    display: flex;
+    width: 100%;
+    max-width: 1400px; /* Prevents cards from getting too wide on large monitors */
+    height: 70vh;      /* Fixes the actual card height */
+    gap: 25px;         /* More space between cards */
+}
+
+.stat-card {
+    flex: 1;
+    border-radius: 40px; /* Slightly rounder for a modern look */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 50px;
+    /* Optional: Add a subtle shadow to make them "pop" off the grey background */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.card-green { background-color: #26d367; }
+.card-black { background-color: #000000; }
+
+/* THE GIANT NUMBERS */
+.giant-number {
+    position: absolute;
+    font-size: 30rem; /* Lowered from 45rem */
+    font-weight: 900;
+    line-height: 0.8;
+    top: -20px;
+}
+
+.num-left {
+    top: -20px; /* Reduced from -40 */
+    left: -10px; /* Reduced from -40 */
+}
+
+.num-right {
+    top: -30px; /* Reduced from -60 */
+    right: -10px; /* Reduced from -30 */
+}
+/* THE LABEL TEXT */
+.label-group {
+    position: relative;
+    z-index: 2; /* Ensures text stays above the number */
+    display: flex;
+    flex-direction: column;
+}
+
+.label-text {
+    font-size: 3.8rem;
+    font-weight: 900;
+    line-height: 0.95;
+    text-transform: lowercase;
+}
+
+.text-black { color: #000000; }
+.text-green { color: #26d367; }
+
+/* Responsive check: prevents text from breaking on small screens */
+@media (max-width: 1200px) {
+    .giant-number { font-size: 25rem; }
+    .label-text { font-size: 2.5rem; }
+}
+
+

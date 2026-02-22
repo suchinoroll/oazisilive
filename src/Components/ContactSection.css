@@ -1,0 +1,87 @@
+.contact-page-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #EBECEE; /* The light grey from your image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 60px;
+}
+
+.contact-split-layout {
+    display: flex;
+    width: 100%;
+    max-width: 1100px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.contact-text-side {
+    flex: 1.2;
+}
+
+.contact-main-title {
+    font-size: 5.5rem;
+    font-weight: 800;
+    margin-bottom: 50px;
+    color: #000;
+    letter-spacing: -2px;
+}
+
+.contact-detail-block {
+    margin-bottom: 30px;
+}
+
+.contact-detail-block label {
+    color: #26D367;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.contact-detail-block p {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #000;
+    margin: 0;
+}
+
+/* THE WHITE CARD */
+.white-form-card {
+    width: 420px;
+    background: #ffffff;
+    border-radius: 40px;
+    padding: 50px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.04);
+}
+
+.form-input-row {
+    margin-bottom: 35px;
+}
+
+.form-input-row input,
+.form-input-row textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    font-size: 1rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.oasis-green-btn {
+    width: 100%;
+    background-color: #26D367;
+    color: #000;
+    border: none;
+    padding: 18px;
+    border-radius: 40px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
