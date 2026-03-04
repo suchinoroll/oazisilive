@@ -10,7 +10,7 @@ import ServicesPage from './Components/ServicesPage.jsx';
 import "./App.css";
 
 // Assets
-import Logo from "./assets/logo.svg";
+import Logo from "./assets/Logo.svg";
 import WomanInCircle from "./assets/Woman in circle.png";
 
 const ScrollToTop = ({ setIsWhiteMode }) => {

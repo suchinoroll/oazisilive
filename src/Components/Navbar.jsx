@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 import HomeIcon from '../assets/Home.svg';
-import ContactIcon from '../assets/contact.svg';
+import ContactIcon from '../assets/Contact.svg';
 import AboutIcon from '../assets/About.svg';
 import ServicesIcon from '../assets/Services.svg';
 
