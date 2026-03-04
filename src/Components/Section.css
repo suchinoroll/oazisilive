@@ -1,0 +1,77 @@
+/* 1. სექციის კონტეინერი (HUG logic) */
+.split-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto; /* ვაუქმებთ 100vh-ს, რომ მოერგოს კონტენტს */
+    min-height: auto;
+    padding: 0; /* ვაუქმებთ გარე პედინგს */
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+/* 2. Half Container */
+.section-half {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px; /* მინიმალური padding, რომ ტექსტი ეკრანს არ მიეკროს */
+    box-sizing: border-box;
+}
+
+/* 3. ტექსტის კონტეინერი */
+.text-container {
+    width: 100%;
+    padding: 60px 5%; /* ვერტიკალური სივრცე (60px) სექციის შიგნით */
+}
+
+.text-container p {
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: #48484a;
+    line-height: 1.6;
+    font-weight: 500;
+    white-space: pre-line;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    text-align: left;
+}
+
+.text-container h2 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.03em;
+}
+
+/* 4. Desktop-ის ოპტიმიზაცია */
+@media (min-width: 769px) {
+    .split-section {
+        flex-direction: row;
+        align-items: stretch; /* ორივე მხარე ერთნაირი სიმაღლისაა */
+    }
+
+    .split-section.reverse {
+        flex-direction: row-reverse;
+    }
+
+    .section-half {
+        width: 50%;
+        padding: 0; /* ვაუქმებთ პედინგს ეკრანის შესავსებად */
+    }
+
+    /* ტექსტის მხარეს ვინარჩუნებთ მცირე გვერდითა დაშორებას */
+    .text-container {
+        padding: 100px 8%;
+    }
+
+    .illustration-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* სურათი ავსებს თავის ნახევარს სრულად */
+        display: block;
+    }
+}

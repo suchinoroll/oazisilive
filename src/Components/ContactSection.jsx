@@ -1,35 +1,48 @@
-import React from 'react';
-import './ContactSection.css';
+import React, { useEffect } from 'react';
+import './AboutPage.css';
 
 const ContactSection = () => {
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, []);
+
     return (
-        <div className="contact-page-container">
-            <div className="contact-split-layout">
+        <main className="about-page" style={{backgroundColor: '#EBECEE'}}>
+            <header className="about-hero reveal">
+                <h1>დაგვიკავშირდით.<br />
+                    <span className="hero-gradient-text animated-gradient">დავიწყოთ პროექტი ერთად.</span>
+                </h1>
+            </header>
 
-                {/* Left Side: Details */}
-                <div className="contact-text-side">
-                    <h1 className="contact-main-title">დაგვიკავშირდით</h1>
+            <div className="full-bleed-container">
+                <div className="bento-grid">
+                    {/* Phone Card - Full Width (Wide) */}
+                    <a href="tel:+995571152508" className="bento-card card-wide reveal stagger-1 contact-link">
+                        <span className="contact-label">ტელეფონი</span>
+                        <p className="contact-value">+995 571 15 25 08</p>
+                    </a>
 
-                    <div className="contact-detail-block">
-                        <label>ტელეფონი</label>
-                        <p>+995 571 15 25 08</p>
-                    </div>
+                    {/* Email Card (Slim) */}
+                    <a href="mailto:oazisiofficial@gmail.com" className="bento-card card-slim reveal stagger-2 contact-link" style={{background: '#000', color: '#fff'}}>
+                        <span className="contact-label">ელ-ფოსტა</span>
+                        <p className="contact-value" style={{fontSize: '18px'}}>oazisiofficial@gmail.com</p>
+                    </a>
 
-                    <div className="contact-detail-block">
-                        <label>ელ-ფოსტა</label>
-                        <p>oazisiofficial@gmail.com</p>
-                    </div>
-
-                    <div className="contact-detail-block">
-                        <label>Facebook</label>
-                        <p>https://www.facebook.com/share/1BAiNNYhEw/</p>
-                    </div>
+                    {/* Facebook Card (Slim) */}
+                    <a href="https://www.facebook.com/share/1BAiNNYhEw/" target="_blank" rel="noreferrer" className="bento-card card-slim reveal stagger-1 contact-link">
+                        <span className="contact-label">Facebook</span>
+                        <p className="contact-value" style={{fontSize: '22px'}}>Oasis Official</p>
+                    </a>
                 </div>
-
-
-
             </div>
-        </div>
+        </main>
     );
 };
 

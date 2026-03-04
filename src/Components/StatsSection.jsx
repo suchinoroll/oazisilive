@@ -2,7 +2,7 @@ import React from 'react';
 import './StatsSection.css';
 
 const StatsSection = () => {
-    // Hardcoded data for now
+    // Project Data
     const data = {
         finished: 50,
         ongoing: 2
@@ -21,6 +21,7 @@ const StatsSection = () => {
                     </div>
                 </div>
 
+                {/* RIGHT CARD: Ongoing Projects */}
                 <div className="stat-card card-black">
                     <div className="giant-number num-right">{data.ongoing}</div>
                     <div className="label-group">

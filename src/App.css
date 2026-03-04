@@ -12,7 +12,7 @@ html {
   /* SNAP LOGIC: Gentler snapping for a smoother feel */
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
-  font-family: -apple-system, system-ui, sans-serif;
+  font-family: "Noto Sans Georgian", sans-serif;
 }
 
 body {
@@ -34,15 +34,18 @@ body {
   background-color: #ffffff;
 }
 
-/* 3. SECTION LOGIC */
+/* 3. SECTION LOGIC - OPTIMIZED FOR HUG & NO CUT-OFF */
 section, .split-section {
   width: 100vw;
-  height: 100vh;
+  height: auto; /* Hug content on mobile */
+  min-height: 100vh; /* At least full screen */
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
+  flex-direction: column; /* Stack on mobile */
   position: relative;
-  background-color: transparent; /* Allows container bg to show through */
+  background-color: transparent;
+  overflow: visible; /* Prevents text clipping */
 }
 
 /* Hero Exception: Must always be Brand Green */
@@ -54,7 +57,6 @@ section, .split-section {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  /* Match this hex code to the final color of your video for a seamless stop */
   background-color: #31CF72;
 }
 
@@ -65,20 +67,18 @@ section, .split-section {
 
 /* 4. SPLIT SECTIONS (About / General) */
 .section-half {
-  flex: 1;
-  height: 100%;
+  flex: none; /* Let height be auto on mobile */
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* ADDED: Centers the image container */
-  padding: 80px;
+  align-items: center;
+  padding: 60px 24px; /* Mobile friendly padding */
 }
 
-
-/* 4. SPLIT SECTIONS (About / General) */
 .section-half img {
   width: 100%;
-  max-width: 650px; /* Increased from 480px to make it feel larger */
+  max-width: 450px;
   height: auto;
   object-fit: contain;
 }
@@ -88,20 +88,24 @@ section, .split-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center; /* Center on mobile */
 }
 
 .text-container h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.2rem, 5vw, 4rem);
   margin-bottom: 24px;
   font-weight: 800;
   color: #000000;
+  line-height: 1.1;
 }
 
+/* YOUR REQUESTED P OPTIMIZATION */
 .text-container p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #333333;
-  max-width: 90%;
+  font-size: clamp(18px, 2.5vw, 24px);
+  max-width: 850px;
+  margin: 0 auto;
+  color: #48484a;
+  line-height: 1.6;
   white-space: pre-line;
 }
 
@@ -111,7 +115,7 @@ section, .split-section {
   top: 30px;
   left: 30px;
   width: calc(100% - 60px);
-  z-index: 9999;
+  z-index: 10000; /* Increased to stay on top */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -120,6 +124,11 @@ section, .split-section {
 
 .fixed-nav-wrapper > * {
   pointer-events: auto;
+}
+
+/* Header dynamic title fix */
+.white-bg .nav-section-title {
+  color: #000000;
 }
 
 .nav-logo-slot {
@@ -138,23 +147,23 @@ section, .split-section {
 
 .nav-logo-slot img {
   height: 28px;
-  /* Initial state: Black logo */
   filter: brightness(0);
   transition: filter 0.4s ease;
 }
 
-/* TRIGGER: Invert logo to white when over dark backgrounds */
 .nav-logo-slot.light-logo img {
   filter: brightness(0) invert(1);
 }
 
-/* 6. STATS SECTION (The 50/2 Cards) */
+/* 6. STATS SECTION */
 .stats-section {
   width: 100vw;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   padding: 24px;
   display: flex;
   background-color: transparent;
+  scroll-snap-align: start;
 }
 
 .stats-grid {
@@ -167,7 +176,7 @@ section, .split-section {
   flex: 1;
   border-radius: 40px;
   position: relative;
-  overflow: hidden; /* Important for cropping the giant numbers */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -207,61 +216,14 @@ section, .split-section {
 .label-black { color: #000000; }
 .label-green { color: #26d367; }
 
-/* 7. RESPONSIVE TWEAKS */
-@media (max-width: 1024px) {
-  .section-half { padding: 40px; }
-  .section-half img { max-width: 320px; } /* Smaller images for tablets/mobile */
-  .stats-grid { flex-direction: column; }
-  .big-num { font-size: 25rem; }
-  .stat-labels span { font-size: 2.5rem; }
-}
-/* --- NAVBAR LOGO & TITLE SWAP (App.css) --- */
-.nav-left-content {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-width: 350px; /* Space reserved for the logo/title */
-  height: 60px;
-}
-
-.nav-logo-slot, .nav-section-title {
-  position: absolute;
-  left: 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: translateY(15px);
-  pointer-events: none;
-  overflow: visible; /* Prevents logo cutoff */
-}
-
-.nav-logo-slot.show, .nav-section-title.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.nav-logo-slot img {
-  height: 35px; /* Fixed height for navbar */
-  width: auto;
-  object-fit: contain;
-  filter: brightness(0);
-}
-
-.nav-section-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #000;
-  white-space: nowrap;
-}
-
-/* --- PROJECTS SECTION BOTTOM ALIGNMENT (ProjectsSection.css) --- */
+/* 7. PROJECTS SECTION */
 .projects-scroll-section {
   width: 100vw;
   height: 100vh;
   padding: 0 40px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* ALIGN CARDS TO BOTTOM */
+  justify-content: flex-end;
   scroll-snap-align: start;
   box-sizing: border-box;
 }
@@ -271,7 +233,7 @@ section, .split-section {
   gap: 30px;
   overflow-x: auto;
   scrollbar-width: none;
-  padding-bottom: 60px; /* Distance from bottom edge of screen */
+  padding-bottom: 60px;
 }
 
 .projects-slider::-webkit-scrollbar { display: none; }
@@ -286,12 +248,9 @@ section, .split-section {
   position: relative;
 }
 
-.project-image-container, .project-bg-image {
+.project-bg-image {
   width: 100%;
   height: 100%;
-}
-
-.project-bg-image {
   object-fit: cover;
   position: absolute;
   top: 0;
@@ -311,81 +270,137 @@ section, .split-section {
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
-.pill-status.upcoming { background: #E8E9FF; color: #7B72FF; }
-.pill-status.active { background: #E2FFE9; color: #26D367; }
-.pill-status.finished { background: #FFEDED; color: #FF5C5C; }
-:root {
-  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Nav left content and section title styles */
+/* 8. NAVBAR DYNAMICS */
 .nav-left-content {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
+  min-width: 200px;
+  height: 60px;
 }
+
 .nav-section-title {
+  position: absolute;
+  left: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 400ms var(--ease-smooth), transform 400ms var(--ease-smooth);
+  transform: translateY(15px);
+  font-size: 2.5rem;
   font-weight: 800;
-  letter-spacing: 0.4px;
-  color: #0b0b0b;
-  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  color: #000;
+  white-space: nowrap;
 }
+
 .nav-section-title.show {
-  opacity: 0.9;
+  opacity: 1;
   transform: translateY(0);
 }
 
-/* Split section reverse (image on right) */
-.split-section.reverse {
-  flex-direction: row-reverse;
-}
-
-/* Illustration container improvements */
-.illustration-container img {
-  transition: transform 800ms var(--ease-smooth), filter 300ms ease;
-  will-change: transform;
-}
-.split-section:hover .illustration-container img {
-  transform: translateY(-4px) scale(1.01);
-}
-
-/* Mobile responsiveness */
-@media (max-width: 900px) {
-  .fixed-nav-wrapper {
-    top: 16px;
-    left: 16px;
-    width: calc(100% - 32px);
-  }
-  .nav-logo-slot.show { width: 150px; }
-  .section-half { padding: 40px 24px; }
-  .text-container p { max-width: 100%; font-size: 1rem; }
-  .hero-logo-large { width: 200px; }
-}
-
-@media (max-width: 600px) {
-  .section-half { padding: 32px 18px; }
-  .text-container h2 { font-size: clamp(2rem, 9vw, 2.6rem); }
-  .hero-logo-large { width: 170px; }
-}
-
-/* Reduce motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .split-section:hover .illustration-container img { transform: none; }
-}
-
-
-/* Hero corner image */
 .hero-corner {
   position: absolute;
   right: 0;
   bottom: 0;
-  height: 50%; /* 50% of the hero section's height */
-  width: auto;  /* Maintain aspect ratio based on height */
-  z-index: 1; /* Below fixed navbar (z=9999), above hero bg */
+  height: 50%;
+  width: auto;
+  z-index: 1;
   pointer-events: none;
-  user-select: none;
+}
+
+/* =============================================
+   9. MOBILE OPTIMIZATIONS (The Final Polish)
+   ============================================= */
+
+@media (max-width: 768px) {
+  /* 0. Header Mobile Adjustments */
+  .fixed-nav-wrapper {
+    top: 15px;
+    left: 15px;
+    width: calc(100% - 30px);
+  }
+
+  .nav-section-title {
+    font-size: 1.6rem !important;
+  }
+
+  /* 1. Ensure the section fills the viewport */
+  .stats-section {
+    height: auto !important;
+    padding: 15px !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 2. Container adjustment */
+  .stats-grid, .stats-container {
+    display: flex;
+    flex-direction: column;
+    height: auto !important;
+    width: 100%;
+    gap: 12px;
+  }
+
+  /* 3. Stat Cards - Hug content */
+  .stat-card {
+    flex: none !important;
+    height: auto !important;
+    min-height: 350px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px !important;
+    overflow: visible !important;
+  }
+
+  /* 4. ADJUSTED GIANT NUMBERS */
+  .big-num, .giant-number {
+    position: absolute;
+    font-size: 22rem !important;
+    font-weight: 900;
+    line-height: 0.8;
+    letter-spacing: -12px;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .num-left { top: -10px !important; left: -20px !important; }
+  .num-right { top: -20px !important; right: -15px !important; }
+
+  /* 5. Scale labels */
+  .stat-labels span, .label-text {
+    font-size: 2.1rem !important;
+    line-height: 1.1;
+  }
+}
+
+/* 10. DESKTOP REFINEMENT (Side-by-side) */
+@media (min-width: 769px) {
+  section, .split-section {
+    flex-direction: row;
+    height: 100vh;
+  }
+
+  .split-section.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .section-half {
+    flex: 1;
+    height: 100%;
+    width: 50%;
+    padding: 80px;
+    align-items: flex-start;
+  }
+
+  .text-container {
+    text-align: left;
+  }
+
+  .text-container p {
+    margin: 0;
+  }
+
+  .illustration-container img {
+    max-width: 650px;
+  }
 }

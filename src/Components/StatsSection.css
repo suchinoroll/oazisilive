@@ -1,32 +1,33 @@
+/* StatsSection.css */
 .stats-section {
-    width: 100%; /* Changed from 100vw to allow for natural scroll */
-    min-height: 80vh; /* Reduced height so it doesn't swallow the whole screen */
+    width: 100%;
+    min-height: 100vh; /* Ensures the section takes full screen */
     background-color: #F2F3F4;
     display: flex;
-    justify-content: center; /* Centers the container */
+    justify-content: center;
     align-items: center;
-    padding: 60px 40px; /* Increased vertical and horizontal padding */
+    padding: 60px 40px;
     box-sizing: border-box;
+    scroll-snap-align: start;
 }
 
 .stats-container {
     display: flex;
     width: 100%;
-    max-width: 1400px; /* Prevents cards from getting too wide on large monitors */
-    height: 70vh;      /* Fixes the actual card height */
-    gap: 25px;         /* More space between cards */
+    max-width: 1400px;
+    height: 75vh; /* Standard desktop height */
+    gap: 25px;
 }
 
 .stat-card {
     flex: 1;
-    border-radius: 40px; /* Slightly rounder for a modern look */
+    border-radius: 40px;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: 50px;
-    /* Optional: Add a subtle shadow to make them "pop" off the grey background */
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
@@ -36,25 +37,28 @@
 /* THE GIANT NUMBERS */
 .giant-number {
     position: absolute;
-    font-size: 30rem; /* Lowered from 45rem */
+    font-size: 30rem;
     font-weight: 900;
     line-height: 0.8;
     top: -20px;
+    user-select: none;
+    pointer-events: none;
 }
 
 .num-left {
-    top: -20px; /* Reduced from -40 */
-    left: -10px; /* Reduced from -40 */
+    top: -20px;
+    left: -10px;
 }
 
 .num-right {
-    top: -30px; /* Reduced from -60 */
-    right: -10px; /* Reduced from -30 */
+    top: -30px;
+    right: -10px;
 }
+
 /* THE LABEL TEXT */
 .label-group {
     position: relative;
-    z-index: 2; /* Ensures text stays above the number */
+    z-index: 2;
     display: flex;
     flex-direction: column;
 }
@@ -69,10 +73,44 @@
 .text-black { color: #000000; }
 .text-green { color: #26d367; }
 
-/* Responsive check: prevents text from breaking on small screens */
+/* TABLET SCALING */
 @media (max-width: 1200px) {
     .giant-number { font-size: 25rem; }
-    .label-text { font-size: 2.5rem; }
+    .label-text { font-size: 2.8rem; }
 }
 
+/* MOBILE OPTIMIZATION: FULL SCREEN FILL */
+@media (max-width: 768px) {
+    .stats-section {
+        padding: 15px; /* Minimal padding for edge-to-edge feel */
+        height: 100vh;
+        /* Fix for mobile browser address bars */
+        height: 100svh;
+    }
 
+    .stats-container {
+        flex-direction: column;
+        height: 100%; /* REQUIRED: Container fills the 100vh section */
+        gap: 12px;
+    }
+
+    .stat-card {
+        flex: 1; /* Forces each card to take exactly 50% of the container height */
+        padding: 30px;
+        border-radius: 25px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .giant-number {
+        font-size: 16rem; /* Scaled down so it doesn't overflow mobile width */
+        letter-spacing: -10px;
+    }
+
+    .label-text {
+        font-size: 2rem;
+    }
+
+    .num-left { top: -10px; left: -5px; }
+    .num-right { top: -10px; right: -5px; }
+}

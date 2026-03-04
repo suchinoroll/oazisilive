@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&display=swap');
+
+/* 1. CRITICAL RESET: Removes the default browser gap around the edges */
+html, body, #root {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100%;
+    overflow-x: hidden; /* Prevents horizontal shaking/scrolling */
+}
+
+:root {
+    --bg-white: #ffffff;
+    --apple-gray: #f5f5f7;
+    --text-black: #1d1d1f;
+    --accent-gradient: linear-gradient(135deg, #26d367 0%, #007aff 50%, #26d367 100%);
+    --font-main: "Noto Sans Georgian", -apple-system, sans-serif;
+    --nav-bounce: cubic-bezier(0.5, 1.5, 0.5, 1);
+}
+
+/* 2. PAGE WRAPPER: Forces the component to take up every pixel of width */
+.about-page {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: var(--bg-white);
+    color: var(--text-black);
+    font-family: var(--font-main);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Hero Section */
+.about-hero {
+    /* Adjusted top padding to make room for your fixed Navbar */
+    padding: 180px 24px 80px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    background: radial-gradient(circle at 50% 0%, rgba(38, 211, 103, 0.08), transparent);
+}
+
+.about-hero h1 {
+    font-size: clamp(40px, 8vw, 84px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.hero-gradient-text {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.animated-gradient {
+    background-size: 200% auto;
+    animation: shimmer 5s linear infinite;
+}
+
+@keyframes shimmer {
+    to { background-position: 200% center; }
+}
+
+.about-hero .lead {
+    font-size: clamp(18px, 2.5vw, 26px);
+    max-width: 850px;
+    margin: 0 auto;
+    color: #48484a;
+    line-height: 1.6;
+}
+
+/* Bento Grid */
+.full-bleed-container {
+    width: 100%;
+    /* Ensures padding is calculated inside the width */
+    box-sizing: border-box;
+    padding: 0 20px;
+    flex-grow: 1; /* Pushes background to the bottom of the screen */
+}
+
+.section-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    margin: 80px 0 40px;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.bento-card {
+    grid-column: span 12;
+    background: var(--apple-gray);
+    padding: 40px;
+    border-radius: 32px;
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: transform 0.5s var(--nav-bounce), background 0.3s ease, box-shadow 0.4s ease;
+}
+
+.bento-card:hover {
+    transform: scale(1.02) translateY(-5px);
+    background: #ffffff;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+}
+
+.bento-card h3 { font-size: 26px; font-weight: 700; margin-bottom: 16px; }
+.bento-card p { font-size: 18px; line-height: 1.6; color: #424245; }
+
+.card-dark { background: #000 !important; color: #fff !important; }
+
+/* Quote Section */
+.quote-wrapper {
+    grid-column: span 12;
+    background: #000;
+    padding: 80px 40px;
+    border-radius: 40px;
+    text-align: center;
+}
+
+.quote-wrapper blockquote {
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 600;
+    line-height: 1.3;
+    color: #fff;
+}
+
+/* Process Section */
+.process-section {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 100px;
+}
+
+.step-card {
+    padding: 30px;
+    background: #fff;
+    border-left: 4px solid #000;
+    transition: all 0.4s var(--nav-bounce);
+}
+
+.step-card:hover {
+    padding-left: 45px;
+    border-left-width: 10px;
+    border-left-color: #26d367;
+}
+
+.step-number { font-weight: 800; font-size: 13px; color: #007aff; text-transform: uppercase; }
+
+/* Reveal Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+
+/* Desktop Overrides */
+@media (min-width: 768px) {
+    .full-bleed-container { padding: 0 5vw; }
+    .bento-card { grid-column: span 6; }
+    .card-wide { grid-column: span 8; }
+    .card-slim { grid-column: span 4; }
+    .process-section { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+}

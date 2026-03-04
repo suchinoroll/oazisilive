@@ -5,16 +5,25 @@ import Section from "./Components/Section";
 import StatsSection from './Components/StatsSection';
 import ContactSection from './Components/ContactSection';
 import ProjectsSection from './Components/ProjectsSection';
+import AboutPage from './Components/AboutPage';
+import ServicesPage from './Components/ServicesPage.jsx';
 import "./App.css";
+
+// Assets
 import Logo from "./assets/logo.svg";
 import WomanInCircle from "./assets/Woman in circle.png";
-import Corner from "./assets/COrner.jpg";
 
-const ScrollToTop = () => {
+const ScrollToTop = ({ setIsWhiteMode }) => {
     const { pathname } = useLocation();
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [pathname]);
+        // Force white background for About and Services pages
+        if (pathname === '/about' || pathname === '/services') {
+            setIsWhiteMode(true);
+        } else if (pathname !== '/') {
+            setIsWhiteMode(false);
+        }
+    }, [pathname, setIsWhiteMode]);
     return null;
 };
 
@@ -24,23 +33,20 @@ function App() {
     const [isProjectsSection, setIsProjectsSection] = useState(false);
 
     useEffect(() => {
-        const rootMargin = '0px 0px -30% 0px'; // detect when 70% of section is visible
-
-        // Track hero for navbar visibility
+        const rootMargin = '0px 0px -30% 0px'; // Detect when 70% of section is visible
         const heroEl = document.querySelector('#hero');
         const statsEl = document.querySelector('.stats-section');
         const projectsEl = document.querySelector('.projects-scroll-section');
 
-        // IntersectionObserver for navbar scrolled state (hide when hero is in full view)
+        // Toggle navbar visibility based on Hero presence
         const heroObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // If hero is not largely in view, mark as scrolled
                 setIsScrolled(!entry.isIntersecting || entry.intersectionRatio < 0.6);
             });
         }, { threshold: [0, 0.6] });
         if (heroEl) heroObserver.observe(heroEl);
 
-        // IO for white mode when Stats or Projects are in view
+        // Manage background theme and dynamic section titles
         const modeObserver = new IntersectionObserver((entries) => {
             let white = false;
             let onProjects = false;
@@ -50,45 +56,33 @@ function App() {
                     if (entry.target === projectsEl) onProjects = true;
                 }
             });
-            // Only apply white mode on home route
+
             if (window.location.pathname === '/') {
                 setIsWhiteMode(white);
-            } else {
-                setIsWhiteMode(false);
             }
             setIsProjectsSection(onProjects);
         }, { threshold: [0.5, 0.75], rootMargin });
+
         if (statsEl) modeObserver.observe(statsEl);
         if (projectsEl) modeObserver.observe(projectsEl);
-
-
-        // Fallback: if IO unsupported, mark scrolled when scrollY > 0
-        const onScrollFallback = () => setIsScrolled(window.scrollY > window.innerHeight * 0.5);
-        let fallbackAttached = false;
-        if (!('IntersectionObserver' in window)) {
-            window.addEventListener('scroll', onScrollFallback, { passive: true });
-            fallbackAttached = true;
-        }
 
         return () => {
             heroObserver.disconnect();
             modeObserver.disconnect();
-            if (fallbackAttached) window.removeEventListener('scroll', onScrollFallback);
         };
     }, []);
 
     return (
         <Router>
-            <ScrollToTop />
+            <ScrollToTop setIsWhiteMode={setIsWhiteMode} />
             <div className={`app-container ${isWhiteMode ? 'white-bg' : ''}`}>
                 <header className="fixed-nav-wrapper">
                     <div className="nav-left-content">
-                        {/* Logo: Hidden if in Projects Section */}
+                        {/* Logo fades out when entering Projects section title mode */}
                         <div className={`nav-logo-slot ${isScrolled && !isProjectsSection ? 'show' : ''}`}>
-                            <img src={Logo} alt="Nav Logo" />
+                            <img src={Logo} alt="Oasis Logo" />
                         </div>
-
-                        {/* Projects Title: Shown ONLY in Projects Section */}
+                        {/* Title appears only in Projects section */}
                         <div className={`nav-section-title ${isProjectsSection ? 'show' : ''}`}>
                             პროექტები
                         </div>
@@ -101,27 +95,23 @@ function App() {
                         <main>
                             <section id="hero" className="section-hero">
                                 <img src={Logo} alt="Logo" className="hero-logo-large" />
-                                <img src={Corner} alt="" className="hero-corner" />
                             </section>
 
                             <Section
-                                id="about"
+                                id="about-intro"
                                 title="ჩვენს შესახებ"
-                                description="შპს „ოაზისი“ დაარსდა 2018 წელს და წარმოადგენს სანდო პარტნიორს სამშენებლო და სარემონტო სფეროში. ჩვენი გუნდი აერთიანებს გამოცდილი პროფესიონალების გუნდს, რომელთა მონაწილეობით მრავალი წარმატებული პროექტი განხორციელდა.
+                                description="შპს „ოაზისი“ დაარსდა 2018 წელს და წარმოადგენს სანდო პარტნიორს სამშენებლო და სარემონტო სფეროში. ჩვენი გუნდი აერთიანებს გამოცდილ პროფესიონალებს, რომელთა მონაწილეობით არაერთი წარმატებული პროექტი განხორციელდა.
 
-ვთავაზობთ სრული სპექტრის სამშენებლო და სარემონტო მომსახურებას — იდეის დაგეგმვიდან პროექტის დასრულებამდე. ვეყრდნობით თანამედროვე ტექნოლოგიებსა და მაღალი ხარისხის მასალებს, რათა შედეგი სრულად შეესაბამებოდეს საერთაშორისო სტანდარტებს და მომხმარებელთა მოლოდინებს.
-
-ჩვენთვის მთავარი ღირებულებებია ხარისხი, სანდოობა და პროფესიონალიზმი."
+ვთავაზობთ სრული სპექტრის სამშენებლო და სარემონტო მომსახურებას — იდეის დაგეგმვიდან პროექტის სრულ დასრულებამდე. ვეყრდნობით თანამედროვე ტექნოლოგიებსა და მაღალი ხარისხის მასალებს, რათა საბოლოო შედეგი სრულად შეესაბამებოდეს საერთაშორისო სტანდარტებს და მომხმარებლის მოლოდინებს."
                                 image={WomanInCircle}
                                 imageRight={false}
                             />
-
                             <StatsSection />
-
-
                             <ProjectsSection />
                         </main>
                     } />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/services" element={<ServicesPage />} />
                     <Route path="/contact" element={<ContactSection />} />
                 </Routes>
             </div>

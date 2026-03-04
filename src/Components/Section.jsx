@@ -1,3 +1,4 @@
+import "./Section.css";
 const Section = ({ id, title, description, image, imageRight }) => {
     return (
         <section id={id} className={`split-section ${imageRight ? 'reverse' : ''}`}>

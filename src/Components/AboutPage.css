@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&display=swap');
+
+/* 1. PERFORMANCE & RESET */
+html, body, #root {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  overflow-x: hidden;
+  background-color: #ffffff;
+}
+
+.about-page, .reveal, .bento-card, .floating-blob, .glass-effect, .step-card {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+:root {
+  --bg-white: #ffffff;
+  --apple-gray: #f5f5f7;
+  --text-black: #1d1d1f;
+  --accent-green: #26d367;
+  --accent-gradient: linear-gradient(135deg, #26d367 0%, #007aff 100%);
+  --font-main: "Noto Sans Georgian", -apple-system, sans-serif;
+  --nav-bounce: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.about-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-white);
+  color: var(--text-black);
+  font-family: var(--font-main);
+  padding-bottom: 120px;
+}
+
+/* 2. HERO SECTION */
+.about-hero {
+  padding: 160px 48px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.about-hero h1 {
+  font-size: clamp(38px, 7vw, 78px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.hero-gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shimmer 5s linear infinite;
+}
+
+@keyframes shimmer { to { background-position: 200% center; } }
+
+.establishment-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--apple-gray);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-green);
+  margin-bottom: 20px;
+}
+
+.lead {
+  font-size: clamp(18px, 2.5vw, 24px);
+  max-width: 850px;
+  margin: 0 auto;
+  color: #48484a;
+  line-height: 1.6;
+}
+
+/* 3. BENTO GRID SYSTEM - FULL SCREEN WITH PADDING */
+.full-bleed-container {
+  width: 100%;
+  padding: 0 48px;
+  box-sizing: border-box;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  margin: 80px 0 40px;
+}
+
+.bento-card {
+  grid-column: span 12;
+  background: var(--apple-gray);
+  padding: 45px;
+  border-radius: 35px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s var(--nav-bounce), background 0.3s ease, box-shadow 0.4s ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-8px);
+  background: #ffffff;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+}
+
+.card-wide { grid-column: span 8; }
+.card-slim { grid-column: span 4; }
+.card-dark { background: #000 !important; color: #fff !important; }
+
+/* 4. CONTACT SPECIFIC STYLES (ADDED) */
+.contact-link {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+.contact-label {
+  color: var(--accent-green);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.contact-value {
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 800;
+  margin: 0;
+  word-break: break-all; /* გრძელი ლინკებისთვის */
+}
+
+/* 5. QUOTE (PURE BLACK) */
+.lively-quote {
+  grid-column: span 12;
+  background: #000 !important;
+  padding: 100px 40px;
+  border-radius: 45px;
+  text-align: center;
+  position: relative;
+}
+
+.quote-icon {
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  font-size: 150px;
+  opacity: 0.1;
+  color: var(--accent-green);
+  font-family: serif;
+}
+
+.lively-quote blockquote {
+  font-size: clamp(22px, 4vw, 36px);
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* 6. PROCESS SECTION */
+.process-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.step-card {
+  padding: 35px;
+  background: var(--apple-gray);
+  border-radius: 28px;
+  transition: all 0.4s var(--nav-bounce);
+}
+
+.step-card:hover {
+  transform: translateY(-10px);
+  background: #fff;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+}
+
+.step-number { color: var(--accent-green); font-weight: 800; font-size: 12px; margin-bottom: 10px; display: block; }
+
+/* 7. REVEAL & GLASS EFFECTS */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s var(--nav-bounce);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+
+.glass-effect {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%);
+  background-size: 200% 200%;
+  animation: sweep 8s infinite linear;
+}
+@keyframes sweep { from { background-position: -100% -100%; } to { background-position: 100% 100%; } }
+
+/* 8. MOBILE RESPONSIVENESS */
+@media (max-width: 900px) {
+  .full-bleed-container { padding: 0 24px; }
+  .card-wide, .card-slim { grid-column: span 12; }
+  .about-hero { padding: 120px 24px 60px; }
+}

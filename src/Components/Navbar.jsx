@@ -1,61 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 import HomeIcon from '../assets/Home.svg';
 import ContactIcon from '../assets/contact.svg';
+import AboutIcon from '../assets/About.svg';
+import ServicesIcon from '../assets/Services.svg';
+
+const tabIndexFromLocation = (location) => {
+    switch (location.pathname) {
+        case '/about': return 1;
+        case '/services': return 2;
+        case '/contact': return 3;
+        default: return 0; // მთავარი გვერდი
+    }
+};
 
 const Navbar = () => {
     const location = useLocation();
-    // Sync active tab with the current URL path
-    const [activeTab, setActiveTab] = useState(location.pathname === '/contact' ? 'contact' : 'home');
-    const [impact, setImpact] = useState(null);
+    const [activeIndex, setActiveIndex] = useState(tabIndexFromLocation(location));
+    const prevIndexRef = useRef(activeIndex);
 
-    // Update tab if user navigates via browser back/forward buttons
     useEffect(() => {
-        const currentTab = location.pathname === '/contact' ? 'contact' : 'home';
-        if (currentTab !== activeTab) {
-            setActiveTab(currentTab);
+        const nextIndex = tabIndexFromLocation(location);
+        if (nextIndex !== prevIndexRef.current) {
+            setActiveIndex(nextIndex);
+            prevIndexRef.current = nextIndex;
         }
-    }, [location.pathname, activeTab]);
-
-    const handleNavClick = (tab) => {
-        if (tab !== activeTab) {
-            setActiveTab(tab);
-
-            // Animation timing for the slider impact
-            setTimeout(() => {
-                setImpact(tab === 'contact' ? 'right' : 'left');
-                setTimeout(() => setImpact(null), 200);
-            }, 180);
-        }
-    };
+    }, [location.pathname]);
 
     return (
         <div className="nav-container">
-            <div className={`nav-wrapper ${impact ? `impact-${impact}` : ''}`}>
-                <div className={`nav-slider ${activeTab === 'contact' ? 'is-contact' : ''}`} />
+            <div className="nav-wrapper">
+                {/* მოძრავი ფონი (სლაიდერი) */}
+                <div
+                    className="nav-slider"
+                    style={{ transform: `translateX(${activeIndex * 100}%)` }}
+                />
 
-                <Link
-                    to="/"
-                    className={`nav-item ${activeTab === 'home' ? 'active' : 'inactive'}`}
-                    onClick={() => handleNavClick('home')}
-                    style={{ textDecoration: 'none' }}
-                >
-                    <div className="icon-slot">
-                        <img src={HomeIcon} alt="Home" className="custom-icon" />
-                    </div>
+                <Link to="/" className={`nav-item ${activeIndex === 0 ? 'active' : 'inactive'}`}>
+                    <div className="icon-slot"><img src={HomeIcon} alt="" className="custom-icon" /></div>
                     <span>მთავარი</span>
                 </Link>
 
-                <Link
-                    to="/contact"
-                    className={`nav-item ${activeTab === 'contact' ? 'active' : 'inactive'}`}
-                    onClick={() => handleNavClick('contact')}
-                    style={{ textDecoration: 'none' }}
-                >
-                    <div className="icon-slot">
-                        <img src={ContactIcon} alt="Contact" className="custom-icon" />
-                    </div>
+                <Link to="/about" className={`nav-item ${activeIndex === 1 ? 'active' : 'inactive'}`}>
+                    <div className="icon-slot"><img src={AboutIcon} alt="" className="custom-icon" /></div>
+                    <span>კომპანია</span>
+                </Link>
+
+                <Link to="/services" className={`nav-item ${activeIndex === 2 ? 'active' : 'inactive'}`}>
+                    <div className="icon-slot"><img src={ServicesIcon} alt="" className="custom-icon" /></div>
+                    <span>სერვისები</span>
+                </Link>
+
+                <Link to="/contact" className={`nav-item ${activeIndex === 3 ? 'active' : 'inactive'}`}>
+                    <div className="icon-slot"><img src={ContactIcon} alt="" className="custom-icon" /></div>
                     <span>კონტაქტი</span>
                 </Link>
             </div>
